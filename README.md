@@ -10,7 +10,7 @@ git clone https://github.com/goxixi/autoDingTalk.git
 ``` 
 3. 根据自己手机修改autoDingTalk.js脚本 \
 当前版本下需要修改的部分： \
-①截图功能部分 \ 
+①截图功能部分; \ 
 ②钉钉密码与接收打卡结果邮箱地址\
 
 4. 设置定时脚本
@@ -22,3 +22,7 @@ git clone https://github.com/goxixi/autoDingTalk.git
 自动开启钉钉，激活极速打卡 \
 脚本启动后，随机延时一段时间再开始打卡任务 \
 在钉钉首页截图并发送邮件至指定邮箱 \
+
+
+## reference
+http://wp.fang1688.cn/study/941.html

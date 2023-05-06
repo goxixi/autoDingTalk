@@ -2,7 +2,6 @@
 // breif: this is a demo script for dingtalk punch in
 //        please set it as a scheduled task in your phone("定时任务")
 
-
 var randomSleepMinutes = 10;
 var keepScreenOnMinutes = 15;
 var swipeStartX = 539;
@@ -10,6 +9,9 @@ var swipeStartY = 1918;
 var swipeEndX = 539;
 var swipeEndY = 500;
 var swipeSpeed = 300;
+
+var dingTalkPassword = "xxx";
+var emailAddress = "xxx@qq.com"
 
 // set a random sleep time to avoid the same punch in time
 var sleep_time = random(0, randomSleepMinutes * 60 * 1000);
@@ -54,7 +56,7 @@ function punchIn() {
     // check whether it has been logined and login if not login yet
     if(id("user_avatar_login_tv").exists()) {
         console.log("not login yet");
-        id("et_password").findOne().setText("1q2w3e4r5t");
+        id("et_password").findOne().setText(dingTalkPassword);
         sleep(1000);
         id("cb_privacy").findOne().click()
         sleep(1000);
@@ -83,7 +85,7 @@ function sendEmail() {
         sleep(3 * 1000);
     }
 
-    id("input").findOne().setText("1825752554@qq.com")
+    id("input").findOne().setText(emailAddress)
     sleep(1000);
     var subject = currentTime + " punch in result";
     id("et_subject").findOne().setText(subject)

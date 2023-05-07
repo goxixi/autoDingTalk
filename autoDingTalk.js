@@ -26,27 +26,27 @@ var is_openAirDroid = true;
 // auto.js定时任务每天在确定时间开启脚本，再添加一个随机的延时，避免每天打卡时间都一样
 var delay_time = random(0, randomSleepMinutes * 60 * 1000);
 console.log("delay time: " + delay_time / 1000 + "s");
-// sleep(delay_time);
+sleep(delay_time);
 
 initial();
 internetCheck();
 
-// var date = new Date();
-// var currentTime = date.toLocaleString();
-// console.log(currentTime);
-// var cur_hour = date.getHours();
-// var cur_minute = date.getMinutes();
+var date = new Date();
+var currentTime = date.toLocaleString();
+console.log(currentTime);
+var cur_hour = date.getHours();
+var cur_minute = date.getMinutes();
 
-// punchIn();
-// if (is_sendEmail) {
-//     sendEmail();
-// }
-// if (is_openAirDroid) {
-//     launchApp("AirDroid");
-//     sleep(10 * 1000);
-// }
-// home();
-// device.cancelKeepingAwake(); // 取消设备常亮
+punchIn();
+if (is_sendEmail) {
+    sendEmail();
+}
+if (is_openAirDroid) {
+    launchApp("AirDroid");
+    sleep(10 * 1000);
+}
+home();
+device.cancelKeepingAwake(); // 取消设备常亮
 
 
 function initial() {

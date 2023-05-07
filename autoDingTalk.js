@@ -14,6 +14,10 @@ var swipeSpeed = 300;
 var dingTalkPassword = "xxx";
 // 接收打卡结果的邮箱地址
 var emailAddress = "xxx@qq.com"
+// 校园网用户名(学号)
+var campusnet_username = "xxx";
+// 校园网密码
+var campusnet_password = "xxx";
 
 var is_sendEmail = true;
 var is_openAirDroid = true;
@@ -22,26 +26,27 @@ var is_openAirDroid = true;
 // auto.js定时任务每天在确定时间开启脚本，再添加一个随机的延时，避免每天打卡时间都一样
 var delay_time = random(0, randomSleepMinutes * 60 * 1000);
 console.log("delay time: " + delay_time / 1000 + "s");
-sleep(delay_time);
+// sleep(delay_time);
 
 initial();
-var date = new Date();
-var currentTime = date.toLocaleString();
-console.log(currentTime);
-var cur_hour = date.getHours();
-var cur_minute = date.getMinutes();
+internetCheck();
 
-punchIn();
-console.log("here");
-if (is_sendEmail) {
-    sendEmail();
-}
-if (is_openAirDroid) {
-    launchApp("AirDroid");
-    sleep(10 * 1000);
-}
-home();
-device.cancelKeepingAwake(); // 取消设备常亮
+// var date = new Date();
+// var currentTime = date.toLocaleString();
+// console.log(currentTime);
+// var cur_hour = date.getHours();
+// var cur_minute = date.getMinutes();
+
+// punchIn();
+// if (is_sendEmail) {
+//     sendEmail();
+// }
+// if (is_openAirDroid) {
+//     launchApp("AirDroid");
+//     sleep(10 * 1000);
+// }
+// home();
+// device.cancelKeepingAwake(); // 取消设备常亮
 
 
 function initial() {
@@ -55,6 +60,8 @@ function initial() {
         sleep(3 * 1000);
     }
     
+    home();
+    sleep(300);
     // 保持手机在一段时间内亮屏
     device.keepScreenOn(keepScreenOnMinutes * 60 * 1000);
 }
@@ -120,15 +127,64 @@ function sendEmail() {
     sleep(1000);
 }
 
-//判断网络情况，如果没有网络，结束脚本运行
+//判断网络情况
 function internetCheck() {
-    var url = "m.baidu.com";
-    var res = http.get(url);
-    if (res.statusCode != 200) {
-      console.error("网络不可用，无法打卡");
-      exit();
+    var url = "www.baidu.com";
+    var count = 0;
+
+    quickSettings();
+    sleep(1000);
+
+    // // wifi打开了，但没网
+    // var res = http.get(url);
+    // while(res.statusCode != 200 && count < 20) {
+    //     console.error("网络不可用，尝试重新登陆校园网");
+    //     // 关闭wifi连接
+    //     click(213, 555);
+    //     sleep(2 * 60 * 1000);
+    //     // 打开wifi连接
+    //     click(213, 555);
+    //     sleep(1000);
+    //     count += 1;
+    // }
+
+    // 重新登陆校园网
+    press(213, 555, 1000);
+    sleep(500);
+    click(467, 530);
+    sleep(1000);
+    id("username").findOne().setText(campusnet_username);
+    id("password").findOne().setText(campusnet_password);
+    id("login").findOne().click();
+    sleep(1000);
+
+    // // 如果wifi没有打卡
+    // while (count < 20) {
+    //     try {
+    //         var res = http.get(url);
+    //     } catch {
+    //         console.error("网络不可用，尝试重新登陆校园网");
+    //         // 关闭wifi连接
+    //         click(213, 555);
+    //         sleep(2 * 60 * 1000);
+    //         // 打开wifi连接
+    //         click(213, 555);
+    //         sleep(1000);
+    //         count += 1;
+    //     }
+    //     if(res.statusCode == 200) {
+    //         break;
+    //     }
+    // }    
+
+    home();  
+
+    // 再次检测网络连接情况
+    if(count >= 20) {
+        console.error("网络不可用");
+        exit()
     }
-  }
+}
   
 //判断GPS是否可用，如果不可用，结束脚本运行
 function gpsCheck() {
@@ -139,7 +195,6 @@ function gpsCheck() {
         console.error("GPS不可用，无法打卡");
         exit();
     }
-    // TODO(GCX) : 若校园网需要重新登录，则进行重新登录
 }
   
   

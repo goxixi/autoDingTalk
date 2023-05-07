@@ -14,13 +14,16 @@ https://github.com/SuperMonster003/AutoJs6
 ```
 git clone https://github.com/goxixi/autoDingTalk.git
 ``` 
-3. 根据自己手机修改autoDingTalk.js脚本 \
+3.安装网易邮箱大师
+
+4. 根据自己手机修改autoDingTalk.js脚本 \
 当前版本下需要修改根据自身情况修改的部分： \
 ① 截图功能部分; \   
 ② 手机解锁部分; \
 ③ 钉钉密码与接收打卡结果邮箱地址 \   
+④ 修改发送确认邮件使用的邮箱app(若不使用网易邮箱大师)
 
-4. 设置定时脚本
+5. 设置定时脚本
 在安卓端auto.js添加两个脚本，分别设置定时时间为上班时间和下班时间
 
 ## log
